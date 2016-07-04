@@ -9,9 +9,10 @@
 
 var haptic = (function(){
 
+    
+    
     var initModule = function($container){
-        console.log('Модуль иницилизирован');
-        console.log($container);
+        haptic.shell.initModule($container);
     };
 
     return {
