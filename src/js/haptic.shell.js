@@ -27,12 +27,12 @@ haptic.shell = (function(){
     *   true в случае успеха, иначе false
     *
     *  Исключения: нет
-    *  
+    *
     * */
 
     var initModule = function($container){
         jqueryMap.$container = $container;
-        console.log(DG)
+        haptic.map.initModule($container)
     };
 
     // Конец initModule
