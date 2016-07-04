@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Haptic map</title>
+
+    <!--Тиблицы стилей-->
+
+    <!--Подключаемые библиотеки-->
+    <script src="js/lib/jquery-3.0.0.min.js"></script>
+
+    <!--Файлы приложения Haptic-->
+    <script src="js/haptic.js"></script>
+
+    <script>
+        $(function () {
+            haptic.initModule($('#haptic'))
+        });
+    </script>
+</head>
+<body>
+<div id="haptic"></div>
+</body>
+</html>
