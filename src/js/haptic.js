@@ -9,7 +9,9 @@
 
 var haptic = (function(){
 
-    
+    var click = function(){
+
+    };
     
     var initModule = function($container){
         haptic.shell.initModule($container);

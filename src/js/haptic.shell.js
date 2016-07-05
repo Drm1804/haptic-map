@@ -1,6 +1,7 @@
 /*
  * haptic.shell.js
  * Модуль Shell для Haptic
+ * 
  */
 
 'use strict';
