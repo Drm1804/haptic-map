@@ -37,7 +37,8 @@ haptic.shell = (function(){
 
     var initModule = function($container){
         setJqueryMap(setJqueryMap);
-        haptic.map.initModule($container)
+        haptic.map.initModule($container);
+        haptic.fake.initModule($container);
     };
     // Конец initModule
 

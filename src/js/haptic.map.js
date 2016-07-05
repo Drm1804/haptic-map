@@ -11,7 +11,7 @@
 haptic.map = (function () {
 
         var configMap = {
-            map_html: '<div id="haptic-map" style="width:800px; height:800px"></div>'
+            map_html: '<div id="haptic-map" class="haptic-map"></div>'
         };
 
         var moduleMap = {
