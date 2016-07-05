@@ -39,11 +39,20 @@ haptic.shell = (function(){
         setJqueryMap(setJqueryMap);
         haptic.map.initModule($container)
     };
-
     // Конец initModule
 
+    var click = function(){
+
+    };
+
+    var dblclick = function(){
+
+    };
+
     return{
-        initModule: initModule
+        initModule: initModule,
+        click: click,
+        dblclick: dblclick
     }
 
 })();
