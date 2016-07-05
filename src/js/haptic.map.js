@@ -11,7 +11,7 @@
 haptic.map = (function () {
 
     var configMap = {
-        map_html: '<div id="haptic-map" style="width:500px; height:400px"></div>'
+        map_html: '<div id="haptic-map" style="width:800px; height:800px"></div>'
     };
 
     var moduleMap = {
@@ -33,6 +33,7 @@ haptic.map = (function () {
      *   - добавляет свой шаблон в общую структуру HTML
      *   - вызывает собственный метод setJqueryMap, который заполняет jqueryMap
      *   - вызывает собственный метод initMap, который инициализирует карту
+     *   - инициализирует модуль управления картой (haptic.control.js)
      *
      *  Возвращает:
      *   true в случае успеха, иначе false
@@ -46,7 +47,7 @@ haptic.map = (function () {
         moduleMap.$append_target = $append_target;
         setJqueryMap();
         initMap();
-
+        haptic.control.initModule($append_target, jqueryMap.mapDOMBlock);
 
         return true;
     };
@@ -102,11 +103,16 @@ haptic.map = (function () {
      * */
 
     var initMap = function () {
-        // todo доделать
+
         DG.then(function () {
                 configMap.map_html = DG.map('haptic-map', {
+                    // todo сделать центровку карты из внешних данных
                     center: [54.98, 82.89],
-                    zoom: 13
+                    zoom: 13,
+                    zoomControl: false,
+                    fullscreenControl: false,
+                    dragging: false,
+                    geoclicker: true
                 });
 
                 DG.marker([54.98, 82.89]).addTo(map);

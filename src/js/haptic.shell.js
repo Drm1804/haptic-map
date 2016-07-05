@@ -9,6 +9,10 @@ haptic.shell = (function(){
 
     var jqueryMap = {};
 
+    var setJqueryMap = function($container){
+        jqueryMap.$container = $container;
+    };
+
 
     /*
     *  Открытый модуль initModule
@@ -31,7 +35,7 @@ haptic.shell = (function(){
     * */
 
     var initModule = function($container){
-        jqueryMap.$container = $container;
+        setJqueryMap(setJqueryMap);
         haptic.map.initModule($container)
     };
 
