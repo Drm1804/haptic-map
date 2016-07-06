@@ -32,36 +32,44 @@ haptic.fake = (function () {
         var $controlBox = $append_target.find('#haptic-fake');
 
         jqueryMap = {
-            fakeControlBox:  $controlBox,
+            fakeControlBox: $controlBox,
             inputLng: $controlBox.find('.haptic-fake-input-lng'),
             inputLat: $controlBox.find('.haptic-fake-input-lat'),
             btnClick: $controlBox.find('.haptic-fake-input-click')
         };
     }
 
-    function fillControlInput(lng, lat){
+    function fillControlInput(lng, lat) {
         jqueryMap.inputLat.val(lat);
         jqueryMap.inputLng.val(lng);
     }
 
+    var cb = function(data){
+        console.log(data)
+        console.log('Вызван callback')
+    };
+
     var createClick = function () {
         var lat = jqueryMap.inputLat.val();
         var lng = jqueryMap.inputLng.val();
-        haptic.click(lat, lng);
+
+        haptic.click(lat, lng, cb)
+
+
+
     };
 
     var initModule = function ($append_target) {
         moduleMap.$append_target = $append_target;
         $append_target.append(configMap.map_html);
         setJqueryMap();
-        jqueryMap.btnClick.on('click', function(){
+        jqueryMap.btnClick.on('click', function () {
             createClick();
         })
     };
 
 
     return {
-        initModule: initModule,
-        createClick: createClick
+        initModule: initModule
     }
 })();

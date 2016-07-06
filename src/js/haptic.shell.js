@@ -44,6 +44,10 @@ haptic.shell = (function(){
 
     var click = function(lat, lng){
         haptic.map.whatIsHere(lat, lng)
+            .then(function(data){
+                console.log(data)
+            })
+
     };
 
     var dblclick = function(){
