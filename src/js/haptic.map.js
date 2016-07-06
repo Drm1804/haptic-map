@@ -76,7 +76,12 @@ haptic.map = (function () {
          *  Исключения: нет
          *
          * */
-        var whatIsHere = function (lat, lng) {
+        var whatIsHere = function (_lat, _lng) {
+
+            var lat = +_lat;
+            var lng = +_lng;
+            console.log('lat: ' + lat + ',' + 'lng: ' + lng);
+            // debugger;
             DG.ajax({
                 url: 'http://catalog.api.2gis.ru/geo/search',
                 data: {
@@ -86,6 +91,7 @@ haptic.map = (function () {
                     // q: 'Москва, Красная площадь, 2'
                 },
                 success: function (data) {
+                    console.log(data);
                     console.log(data.result[0]);
                 },
                 error: function (error) {

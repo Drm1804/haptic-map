@@ -10,10 +10,15 @@
 
 haptic.fake = (function () {
 
+    var moduleMap = {
+        $append_target: null,
+        mapObject: null
+    };
+
     var configMap = {
-        map_html: '<div id="haptic-fake" style="position:absolute; right: 0; top: 0;">' +
-        '<span>lng:</span><input class="haptic-fake-input-lng" placeholder="lng" type="text" style="width: 100px; display: block;">' +
-        '<span>lat:</span><input class="haptic-fake-input-lat" placeholder="lat" type="text" style="width: 100px; display: block;">' +
+        map_html: '<div id="haptic-fake" class="haptic-fake" style="">' +
+        '<span>lat:</span><input class="haptic-fake-input-lat" placeholder="lat" value="61.42147064208985" type="text" style="width: 100px; display: block;">' +
+        '<span>lng:</span><input class="haptic-fake-input-lng" placeholder="lng" value="55.14788084304194" type="text" style="width: 100px; display: block;">' +
         '<input class="haptic-fake-input-click" type="submit"  value="Кликнуть"  style="width: 100px;display: block;"/>' +
         '' +
         '</div>'
@@ -23,7 +28,7 @@ haptic.fake = (function () {
     var jqueryMap = {};
 
     function setJqueryMap() {
-        var $append_target = stateMap.$append_target;
+        var $append_target = moduleMap.$append_target;
         var $controlBox = $append_target.find('#haptic-fake');
 
         jqueryMap = {
@@ -40,12 +45,18 @@ haptic.fake = (function () {
     }
 
     var createClick = function () {
-        haptic.click();
+        var lat = jqueryMap.inputLat.val();
+        var lng = jqueryMap.inputLng.val();
+        haptic.click(lat, lng);
     };
 
     var initModule = function ($append_target) {
+        moduleMap.$append_target = $append_target;
         $append_target.append(configMap.map_html);
-        setJqueryMap()
+        setJqueryMap();
+        jqueryMap.btnClick.on('click', function(){
+            createClick();
+        })
     };
 
 

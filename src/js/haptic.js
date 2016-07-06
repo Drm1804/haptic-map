@@ -18,8 +18,8 @@ var haptic = (function(){
     * Метод ссылается на аналогичный метод из модуля Shell,
     * вынесен сюда для удобства использования извне
     */
-    var click = function(){
-        haptic.shell.click();
+    var click = function(lat, lng){
+        haptic.shell.click(lat, lng);
     };
 
 

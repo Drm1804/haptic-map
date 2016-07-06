@@ -42,8 +42,8 @@ haptic.shell = (function(){
     };
     // Конец initModule
 
-    var click = function(){
-
+    var click = function(lat, lng){
+        haptic.map.whatIsHere(lat, lng)
     };
 
     var dblclick = function(){
