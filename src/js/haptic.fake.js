@@ -44,19 +44,11 @@ haptic.fake = (function () {
         jqueryMap.inputLng.val(lng);
     }
 
-    var cb = function(data){
-        console.log(data)
-        console.log('Вызван callback')
-    };
-
     var createClick = function () {
         var lat = jqueryMap.inputLat.val();
         var lng = jqueryMap.inputLng.val();
 
-        haptic.click(lat, lng, cb)
-
-
-
+        haptic.click(lat, lng)
     };
 
     var initModule = function ($append_target) {

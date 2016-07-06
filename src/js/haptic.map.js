@@ -11,7 +11,8 @@
 haptic.map = (function () {
 
     var configMap = {
-        map_html: '<div id="haptic-map" class="haptic-map"></div>'
+        map_html: '<div id="haptic-map" class="haptic-map"></div>',
+        circle_html: '<div class="haptic-map-circle"></div>'
     };
 
     var moduleMap = {
@@ -62,16 +63,13 @@ haptic.map = (function () {
      *  Узнает что находится по переданным координатам
      *
      *  Аргументы:
-     *   $append_target - jq-объект, в который модуль добавил свой HTML-шаблон
+     *   _lat - number/string - широта
+     *   _lng - number/string - долгота
      *
      *  Действие:
-     *   - добавляет свой шаблон в общую структуру HTML
-     *   - вызывает собственный метод setJqueryMap, который заполняет jqueryMap
-     *   - вызывает собственный метод initMap, который инициализирует карту
-     *   - инициализирует модуль управления картой (haptic.control.js)
+     *   - делает асинхронный запрос к Апи
      *
-     *  Возвращает:
-     *   true в случае успеха, иначе false
+     *  Возвращает promise
      *
      *  Исключения: нет
      *
@@ -80,14 +78,12 @@ haptic.map = (function () {
         var lat = +_lat;
         var lng = +_lng;
         console.log('lat: ' + lat + ',' + 'lng: ' + lng);
-        // debugger;
         return DG.ajax({
             url: 'http://catalog.api.2gis.ru/geo/search',
             data: {
                 key: 'ruczoy1743',
                 version: 1.3,
                 q: lat + ',' + lng
-                // q: 'Москва, Красная площадь, 2'
             },
             success: function (data) {
                 console.log(data.result[0]);
@@ -103,19 +99,19 @@ haptic.map = (function () {
     // Конец whatIsHere
 
     /*
-     *  Открытый метод whatIsHere
+     *  Открытый метод createClickCircle
      *
      *  Назначение:
-     *  Узнает что находится по переданным координатам
+     *  создает на карте круг, обозначающий одиночный клик
      *
      *  Аргументы:
-     *   $append_target - jq-объект, в который модуль добавил свой HTML-шаблон
+     *   _lat - number/string - широта (координаты центра кртуга)
+     *   _lng - number/string - долгота (координаты центра кртуга)
+     *
      *
      *  Действие:
-     *   - добавляет свой шаблон в общую структуру HTML
-     *   - вызывает собственный метод setJqueryMap, который заполняет jqueryMap
-     *   - вызывает собственный метод initMap, который инициализирует карту
-     *   - инициализирует модуль управления картой (haptic.control.js)
+     *   - создает html-элемент в виде круга на месте клика
+     *   - удаляет этот элемент по истичению времени
      *
      *  Возвращает:
      *   true в случае успеха, иначе false
@@ -124,8 +120,16 @@ haptic.map = (function () {
      *
      * */
 
+    var createClickCircle = function(_lat, _lng){
+        var circle = $(configMap.circle_html);
+        jqueryMap.mapDOMBlock.append(circle);
 
-    // Конец whatIsHere
+        // setTimeout(function(){
+        //     $(circle).remove();
+        // }, 3000)
+    };
+
+    // Конец createClickCircle
 
     /*
      *  Конфигурационный метод setJqueryMap
@@ -212,7 +216,8 @@ haptic.map = (function () {
 
     return {
         initModule: initModule,
-        whatIsHere: whatIsHere
+        whatIsHere: whatIsHere,
+        createClickCircle: createClickCircle
 
     }
 })();

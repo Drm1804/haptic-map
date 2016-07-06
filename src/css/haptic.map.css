@@ -1,4 +1,26 @@
-.haptic-map{
-    width:800px;
-    height:800px
+.haptic-map {
+    width: 800px;
+    height: 800px
+}
+
+.haptic-map-circle {
+    width: 30px;
+    height: 30px;
+    top: 15px;
+    left: 15px;
+    margin: -15px 0 0 -15px;
+    background: red;
+    border-radius: 50%;
+    position: absolute;
+    z-index: 1000;
+    transform: scale(1);
+    animation: click 1s linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes click {
+    to {
+        transform: scale(2.5);
+        opacity: 0;
+    }
 }
