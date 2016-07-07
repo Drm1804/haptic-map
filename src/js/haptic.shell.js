@@ -21,6 +21,32 @@ haptic.shell = (function () {
         mapZoom: null
     };
 
+    /*
+     *  Приватный метод getCenter
+     *
+     *  Назначение:
+     *  Считает центр карты по переданным координатам
+     *
+     *  Аргументы:
+     *   mapCenter - массив объектов, координаты углов карты
+     *
+     *  Действие:
+     *    Находит центр карты
+     *
+     *  Возвращает высчитанное значение
+     *
+     *  Исключения: нет
+     *
+     * */
+
+    var getCenterMap = function(mapCoord){
+        var latCenter = (mapCoord[0].lat - mapCoord[1].lat)/2 + mapCoord[1].lat;
+        var lngCenter = (mapCoord[0].lng - mapCoord[3].lng)/2 + mapCoord[3].lng;
+
+        return [lngCenter, latCenter]
+    };
+
+    // Конец getCenter
 
     /*
      * Приватный метод whatIsHere
@@ -60,7 +86,7 @@ haptic.shell = (function () {
      */
 
     var setViewMap = function (mapCoord, zoom) {
-        var centerCoord = haptic.map.getCenterMap(mapCoord);
+        var centerCoord = getCenterMap(mapCoord);
         haptic.map.setViewMap(centerCoord, zoom);
     };
 
@@ -176,7 +202,7 @@ haptic.shell = (function () {
 
         // todo сделать метод, который будет имитировать клик на карте отображая кружок
 
-        // todo 
+        // todo сделать запрос к методу whatIsHere
 
     };
 

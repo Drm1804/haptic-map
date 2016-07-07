@@ -4,7 +4,9 @@
  *
  *  Функциональный модуль приложения Haptic
  *
- *  Функционал - прослойка между приложением и api картографического сервиса
+ *  Функционал - прослойка между приложением и api картографического сервиса.
+ *
+ *  Модуль построен по принципу "глупый модуль", и является только прослойкой, логики в нем нет.
  *
  * */
 
@@ -28,32 +30,7 @@ haptic.map = (function () {
         return true;
     };
 
-    /*
-     *  Открытый метод getCenter
-     *
-     *  Назначение:
-     *  Считает центр карты по переданным координатам
-     *
-     *  Аргументы:
-     *   mapCenter - массив объектов, координаты углов карты
-     *
-     *  Действие:
-     *    Находит центр карты
-     *
-     *  Возвращает высчитанное значение
-     *
-     *  Исключения: нет
-     *
-     * */
 
-    var getCenterMap = function(mapCoord){
-        var latCenter = (mapCoord[0].lat - mapCoord[1].lat)/2 + mapCoord[1].lat;
-        var lngCenter = (mapCoord[0].lng - mapCoord[3].lng)/2 + mapCoord[3].lng;
-
-        return [lngCenter, latCenter]
-    };
-
-    // Конец initModule
 
 
     /*
@@ -251,7 +228,6 @@ haptic.map = (function () {
     return {
         initMap: initMap,
         setViewMap: setViewMap,
-        getCenterMap: getCenterMap,
         initModule: initModule,
         whatIsHere: whatIsHere,
         createClickCircle: createClickCircle
