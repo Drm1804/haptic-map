@@ -54,12 +54,8 @@ var haptic = (function(){
     * Метод ссылается на аналогичный метод из модуля Shell,
     * вынесен сюда для удобства использования извне
     *
-    * Возвращает:
-    *   true - если функция выполнена
-    *   false - если не выполнена
     */
     var click = function(clickCoord, mapCoord, zoom){
-
 
         // todo тестовые данные, используются только для отладки
         mapCoord = [{lat: 61.39949798583985,lng: 55.15223368925793},
@@ -70,11 +66,9 @@ var haptic = (function(){
         zoom = 16;
 
 
-        if(!clickCoord || !Array.isArray(clickCoord) || !Array.isArray(mapCoord) || !mapCoord || !zoom){
-            return false;
-        }
+
+
         haptic.shell.click(clickCoord, mapCoord, zoom);
-        return true;
     };
 
 
