@@ -31,7 +31,9 @@ haptic.map = (function () {
     };
 
 
-
+    //------------------------------
+    // Открытые методы
+    //------------------------------
 
     /*
      *  Открытый метод initModule
@@ -95,10 +97,6 @@ haptic.map = (function () {
                 version: 1.3,
                 q: lat + ',' + lng
             },
-            success: function (data) {
-                console.log(data.result[0]);
-
-            },
             error: function (error) {
                 console.log(error);
 
@@ -130,19 +128,25 @@ haptic.map = (function () {
      *
      * */
 
-    var createClickCircle = function(_lat, _lng){
+    var createClickCircle = function(offset){
+        //offset = [10, 10];
         var circle = $(configMap.circle_html);
         jqueryMap.mapDOMBlock.append(circle);
+        circle.css({top: offset[0] + '%', left: offset[1] + '%'});
 
-        setTimeout(function(){
-            $(circle).remove();
-        }, 3000)
+        //setTimeout(function(){
+        //    $(circle).remove();
+        //}, 3000)
     };
 
     // Конец createClickCircle
 
+    //------------------------------
+    // Приватные методы
+    //------------------------------
+
     /*
-     *  Конфигурационный метод setJqueryMap
+     *  Приватный метод setJqueryMap
      *
      *  Назначение:
      *  Конфигурирует переменную jqueryMap, чтобы ограничить запросы к DOM
@@ -179,7 +183,7 @@ haptic.map = (function () {
     };
 
     /*
-     *  Закрытый метод initMap
+     *  Приватный initMap
      *
      *  Назначение:
      *  Добавляет карту на страницу
@@ -198,11 +202,7 @@ haptic.map = (function () {
      *
      * */
 
-    var initMap = function (mapCoord, zoom) {
-
-        var mapCenter = getCenterMap(mapCoord);
-
-        zoom = 16;
+    var initMap = function (mapCenter, zoom) {
 
         return DG.then(function () {
                 moduleMap.mapObject = DG.map('haptic-map', {
@@ -219,8 +219,6 @@ haptic.map = (function () {
                 subscribeEvent();
             }
         );
-
-
     };
 
     // Конец initModule

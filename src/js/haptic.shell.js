@@ -21,11 +21,15 @@ haptic.shell = (function () {
         mapZoom: null
     };
 
+    //------------------------------
+    // Приватные методы
+    //------------------------------
+
     /*
      *  Приватный метод getCenter
      *
      *  Назначение:
-     *  Считает центр карты по переданным координатам
+     *    считает центр карты по переданным координатам
      *
      *  Аргументы:
      *   mapCenter - массив объектов, координаты углов карты
@@ -33,15 +37,15 @@ haptic.shell = (function () {
      *  Действие:
      *    Находит центр карты
      *
-     *  Возвращает высчитанное значение
+     *  Возвращает посчитанное значение
      *
      *  Исключения: нет
      *
      * */
 
-    var getCenterMap = function(mapCoord){
-        var latCenter = (mapCoord[0].lat - mapCoord[1].lat)/2 + mapCoord[1].lat;
-        var lngCenter = (mapCoord[0].lng - mapCoord[3].lng)/2 + mapCoord[3].lng;
+    var getCenterMap = function (mapCoord) {
+        var latCenter = (mapCoord[0].lat - mapCoord[1].lat) / 2 + mapCoord[1].lat;
+        var lngCenter = (mapCoord[0].lng - mapCoord[3].lng) / 2 + mapCoord[3].lng;
 
         return [lngCenter, latCenter]
     };
@@ -62,9 +66,8 @@ haptic.shell = (function () {
     var whatIsHere = function (clickCoord) {
         haptic.map.whatIsHere(clickCoord[0], clickCoord[1])
             .then(function (data) {
-                // todo сделать метод для отображения информации на экране
-                // console.log('====================');
-                // console.log(data)
+                 console.log('Here is: ');
+                 console.log(data.result[0]);
             });
     };
 
@@ -91,6 +94,38 @@ haptic.shell = (function () {
     };
 
     // конец setViewMap
+
+    /*
+     * Приватный метод calcOffsetClickCircle
+     *
+     * Метод высчитывает отступ сверху и справа от края карты в процентах
+     *
+     * Аргументы:
+     *   mapCoord - массив объектов с координатами карты
+     *   zoom - зум
+     *
+     *
+     *
+     * Возвращает:
+
+     */
+
+    var calcOffsetClickCircle = function(clickCoord, mapCoord){
+
+        // todo подумать над реализацией
+        //var widthMap = mapCoord[0].lng - mapCoord[1].lng;
+        //widthMap = (widthMap < 0) ? widthMap*(-1): widthMap;
+        //var offsetLeft = widthMap * clickCoord[1]/100
+        //debugger;
+
+    };
+
+
+    // конец calcOffsetClickCircle
+
+    //------------------------------
+    // Открытые методы
+    //------------------------------
 
 
     /*
@@ -139,8 +174,11 @@ haptic.shell = (function () {
      */
 
     var initMap = function (mapCoord, zoom) {
+
+        var mapCenter = getCenterMap(mapCoord);
+
         if (!moduleState.initMap) {
-            haptic.map.initMap(mapCoord, zoom)
+            haptic.map.initMap(mapCenter, zoom)
                 .then(function () {
                     moduleState.initMap = true;
                     moduleState.mapZoom = zoom;
@@ -200,9 +238,12 @@ haptic.shell = (function () {
             setViewMap(mapCoord, zoom);
         }
 
-        // todo сделать метод, который будет имитировать клик на карте отображая кружок
+        // todo модифицировать метод так, чтобы в него можно было передавать проценты для отступа
+        var offset = calcOffsetClickCircle(clickCoord, mapCoord);
 
-        // todo сделать запрос к методу whatIsHere
+        haptic.map.createClickCircle(offset);
+
+        whatIsHere(clickCoord);
 
     };
 
