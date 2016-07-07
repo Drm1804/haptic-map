@@ -48,7 +48,7 @@ haptic.fake = (function () {
         var lat = jqueryMap.inputLat.val();
         var lng = jqueryMap.inputLng.val();
 
-        haptic.click(lat, lng)
+        haptic.click([lat, lng])
     };
 
     var initModule = function ($append_target) {

@@ -8,12 +8,16 @@
 
 haptic.shell = (function(){
 
+
     var jqueryMap = {};
 
     var setJqueryMap = function($container){
         jqueryMap.$container = $container;
     };
 
+    var moduleState = {
+        initMap: false
+    };
 
     /*
     *  Открытый модуль initModule
@@ -27,6 +31,7 @@ haptic.shell = (function(){
     *  Действие:
     *   - инизиализацию модуля haptic.map
     *   - вызов метода createMap модуля haptic.map
+    *   - вызов метода createMap модуля haptic.map.initMap()
     *
     *  Возвращает:
     *   true в случае успеха, иначе false
@@ -42,6 +47,33 @@ haptic.shell = (function(){
     };
     // Конец initModule
 
+
+    /*
+     * Публичный метод initMap
+     *
+     * Метод инициализирует карту
+     *
+     * Аргументы:
+     *   mapCoord - массив объектов с координатами карты
+     *   zoom - зум
+     *
+     *
+     *
+     * Возвращает:
+     *   true - если функция выполнена
+     *   false - если не выполнена
+     */
+
+    var initMap = function(mapCoord, zoom){
+
+        haptic.map.initMap(mapCoord, zoom)
+            .then(function(){
+                moduleState.initMap = true;
+            })
+
+    };
+
+    // Конец initMap
 
     /*
      * Публичный метод click
@@ -63,9 +95,9 @@ haptic.shell = (function(){
 
 
         // todo create method getCenterMap
-        haptic.map.getCenterMap();
+        haptic.map.getCenterMap(mapCoord);
 
-        
+
 
         haptic.map.whatIsHere(clickCoord.lat, clickCoord.lng)
             .then(function(data){
@@ -80,6 +112,7 @@ haptic.shell = (function(){
 
     return{
         initModule: initModule,
+        initMap: initMap,
         click: click,
         dblclick: dblclick
     }

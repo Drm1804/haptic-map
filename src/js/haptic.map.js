@@ -40,7 +40,7 @@ haptic.map = (function () {
      *
      * */
 
-    var getCenter = function(mapCoord){
+    var getCenterMap = function(mapCoord){
         var latCenter = (mapCoord[0].lat - mapCoord[1].lat)/2 + mapCoord[1].lat;
         var lngCenter = (mapCoord[0].lng - mapCoord[3].lng)/2 + mapCoord[3].lng;
 
@@ -76,7 +76,6 @@ haptic.map = (function () {
         $append_target.append(configMap.map_html);
         moduleMap.$append_target = $append_target;
         setJqueryMap();
-        initMap();
 
         return true;
     };
@@ -218,16 +217,11 @@ haptic.map = (function () {
 
     var initMap = function (mapCoord, zoom) {
 
-        mapCoord = [{lat: 61.39949798583985,lng: 55.15223368925793},
-            {lat: 61.41664266586304,lng: 55.1522459501258},
-            {lat: 61.41664266586304,lng: 55.14246057917798},
-            {lat: 61.39949798583985,lng: 55.14246057917798}];
-
-        var mapCenter = getCenter(mapCoord);
+        var mapCenter = getCenterMap(mapCoord);
 
         zoom = 16;
 
-        DG.then(function () {
+        return DG.then(function () {
                 moduleMap.mapObject = DG.map('haptic-map', {
                     // todo сделать центровку карты из внешних данных
                     center: [mapCenter[0], mapCenter[1]],
@@ -240,11 +234,6 @@ haptic.map = (function () {
                     doubleClickZoom: false
                 });
                 subscribeEvent();
-
-                return true;
-            },
-            function () {
-                return false;
             }
         );
 
@@ -254,7 +243,8 @@ haptic.map = (function () {
     // Конец initModule
 
     return {
-        getCenter: getCenter,
+        initMap: initMap,
+        getCenterMap: getCenterMap,
         initModule: initModule,
         whatIsHere: whatIsHere,
         createClickCircle: createClickCircle
