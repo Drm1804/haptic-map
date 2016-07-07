@@ -23,6 +23,34 @@ haptic.map = (function () {
     var jqueryMap = {};
 
     /*
+     *  Открытый метод getCenter
+     *
+     *  Назначение:
+     *  Считает центр карты по переданным координатам
+     *
+     *  Аргументы:
+     *   mapCenter - массив объектов, координаты углов карты
+     *
+     *  Действие:
+     *    Находит центр карты
+     *
+     *  Возвращает высчитанное значение
+     *
+     *  Исключения: нет
+     *
+     * */
+
+    var getCenter = function(mapCoord){
+        var latCenter = (mapCoord[0].lat - mapCoord[1].lat)/2 + mapCoord[1].lat;
+        var lngCenter = (mapCoord[0].lng - mapCoord[3].lng)/2 + mapCoord[3].lng;
+
+        return [lngCenter, latCenter]
+    };
+
+    // Конец initModule
+
+
+    /*
      *  Открытый метод initModule
      *
      *  Назначение:
@@ -124,9 +152,9 @@ haptic.map = (function () {
         var circle = $(configMap.circle_html);
         jqueryMap.mapDOMBlock.append(circle);
 
-        // setTimeout(function(){
-        //     $(circle).remove();
-        // }, 3000)
+        setTimeout(function(){
+            $(circle).remove();
+        }, 3000)
     };
 
     // Конец createClickCircle
@@ -175,6 +203,8 @@ haptic.map = (function () {
      *  Добавляет карту на страницу
      *
      *  Аргументы:
+     *    mapCoord - координаты углов карты
+     *    zoom - zoom
      *
      *  Действие:
      *   - добавляет карту на страницу
@@ -186,13 +216,22 @@ haptic.map = (function () {
      *
      * */
 
-    var initMap = function () {
+    var initMap = function (mapCoord, zoom) {
+
+        mapCoord = [{lat: 61.39949798583985,lng: 55.15223368925793},
+            {lat: 61.41664266586304,lng: 55.1522459501258},
+            {lat: 61.41664266586304,lng: 55.14246057917798},
+            {lat: 61.39949798583985,lng: 55.14246057917798}];
+
+        var mapCenter = getCenter(mapCoord);
+
+        zoom = 16;
 
         DG.then(function () {
                 moduleMap.mapObject = DG.map('haptic-map', {
                     // todo сделать центровку карты из внешних данных
-                    center: [55.147345, 61.408079],
-                    zoom: 13,
+                    center: [mapCenter[0], mapCenter[1]],
+                    zoom: zoom,
                     zoomControl: false,
                     fullscreenControl: false,
                     dragging: false,
@@ -215,6 +254,7 @@ haptic.map = (function () {
     // Конец initModule
 
     return {
+        getCenter: getCenter,
         initModule: initModule,
         whatIsHere: whatIsHere,
         createClickCircle: createClickCircle

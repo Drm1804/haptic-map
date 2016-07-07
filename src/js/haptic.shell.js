@@ -42,8 +42,32 @@ haptic.shell = (function(){
     };
     // Конец initModule
 
-    var click = function(lat, lng){
-        haptic.map.whatIsHere(lat, lng)
+
+    /*
+     * Публичный метод click
+     *
+     * Метод имитирует одинарный клик по карте.
+     *
+     * Аргументы:
+     *   clickCoord - массив, координаты клика
+     *   mapCoord - массив, координаты углов карты
+     *   zoom - зум
+     *
+     *
+     *
+     * Возвращает:
+     *   true - если функция выполнена
+     *   false - если не выполнена
+     */
+    var click = function(clickCoord, mapCoord, zoom){
+
+
+        // todo create method getCenterMap
+        haptic.map.getCenterMap();
+
+        
+
+        haptic.map.whatIsHere(clickCoord.lat, clickCoord.lng)
             .then(function(data){
                 // console.log(data)
             });

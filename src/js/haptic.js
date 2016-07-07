@@ -15,11 +15,27 @@ var haptic = (function(){
     *
     * Метод имитирует одинарный клик по карте.
     *
+    * Аргументы:
+    *   clickCoord - массив, координаты клика
+    *   mapCoord - массив, координаты углов карты
+    *   zoom - зум
+    *
     * Метод ссылается на аналогичный метод из модуля Shell,
     * вынесен сюда для удобства использования извне
+    *
+    * Возвращает:
+    *   true - если функция выполнена
+    *   false - если не выполнена
     */
-    var click = function(lat, lng){
-        haptic.shell.click(lat, lng);
+    var click = function(clickCoord, mapCoord, zoom){
+        
+        
+        
+        if(!clickCoord || !Array.isArray(clickCoord) || !Array.isArray(mapCoord) || !mapCoord || !zoom){
+            return false;
+        }
+        haptic.shell.click(clickCoord, mapCoord, zoom);
+        return true;
     };
 
 
