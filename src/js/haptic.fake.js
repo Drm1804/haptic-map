@@ -17,9 +17,11 @@ haptic.fake = (function () {
 
     var configMap = {
         map_html: '<div id="haptic-fake" class="haptic-fake" style="">' +
+        '<input class="haptic-fake-input-init" type="submit"  value="Инициализировать"  style="display: block;"/>' +
+        '<hr>'+
         '<span>lat:</span><input class="haptic-fake-input-lat" placeholder="lat" value="61.42147064208985" type="text" style="width: 100px; display: block;">' +
         '<span>lng:</span><input class="haptic-fake-input-lng" placeholder="lng" value="55.14788084304194" type="text" style="width: 100px; display: block;">' +
-        '<input class="haptic-fake-input-click" type="submit"  value="Кликнуть"  style="width: 100px;display: block;"/>' +
+        '<input class="haptic-fake-input-click" type="submit"  value="Кликнуть"  style="display: block;"/>' +
         '' +
         '</div>'
     };
@@ -35,7 +37,8 @@ haptic.fake = (function () {
             fakeControlBox: $controlBox,
             inputLng: $controlBox.find('.haptic-fake-input-lng'),
             inputLat: $controlBox.find('.haptic-fake-input-lat'),
-            btnClick: $controlBox.find('.haptic-fake-input-click')
+            btnClick: $controlBox.find('.haptic-fake-input-click'),
+            btnInit: $controlBox.find('.haptic-fake-input-init')
         };
     }
 
@@ -43,6 +46,10 @@ haptic.fake = (function () {
         jqueryMap.inputLat.val(lat);
         jqueryMap.inputLng.val(lng);
     }
+
+    var initMap = function(){
+        haptic.initMap()
+    };
 
     var createClick = function () {
         var lat = jqueryMap.inputLat.val();
@@ -57,6 +64,9 @@ haptic.fake = (function () {
         setJqueryMap();
         jqueryMap.btnClick.on('click', function () {
             createClick();
+        });
+        jqueryMap.btnInit.on('click', function () {
+            initMap();
         })
     };
 

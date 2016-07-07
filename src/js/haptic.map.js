@@ -22,6 +22,12 @@ haptic.map = (function () {
 
     var jqueryMap = {};
 
+
+    var setViewMap = function(mapCoord, zoom){
+        moduleMap.mapObject.setView([mapCoord[0], mapCoord[1]], zoom);
+        return true;
+    };
+
     /*
      *  Открытый метод getCenter
      *
@@ -244,6 +250,7 @@ haptic.map = (function () {
 
     return {
         initMap: initMap,
+        setViewMap: setViewMap,
         getCenterMap: getCenterMap,
         initModule: initModule,
         whatIsHere: whatIsHere,

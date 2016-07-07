@@ -6,41 +6,89 @@
 
 'use strict';
 
-haptic.shell = (function(){
+haptic.shell = (function () {
 
 
     var jqueryMap = {};
 
-    var setJqueryMap = function($container){
+    var setJqueryMap = function ($container) {
         jqueryMap.$container = $container;
     };
 
     var moduleState = {
-        initMap: false
+        initMap: false,
+        mapCoord: null,
+        mapZoom: null
     };
 
-    /*
-    *  Открытый модуль initModule
-    *
-    *  Назначение:
-    *  Требует, чтобы модуль shell предоставил свою функциональность
-    *
-    *  Аргументы:
-    *   $container - jq-объект, в котором будет работать модуль
-    *
-    *  Действие:
-    *   - инизиализацию модуля haptic.map
-    *   - вызов метода createMap модуля haptic.map
-    *   - вызов метода createMap модуля haptic.map.initMap()
-    *
-    *  Возвращает:
-    *   true в случае успеха, иначе false
-    *
-    *  Исключения: нет
-    *
-    * */
 
-    var initModule = function($container){
+    /*
+     * Приватный метод whatIsHere
+     *  Метод запрашивает данные о том, что находится по этим координатам
+     *
+     * Аргументы:
+     *  clickCoord - массив с координатами клика
+     *
+     * Возвращает promise
+
+     */
+
+    var whatIsHere = function (clickCoord) {
+        haptic.map.whatIsHere(clickCoord[0], clickCoord[1])
+            .then(function (data) {
+                // todo сделать метод для отображения информации на экране
+                // console.log('====================');
+                // console.log(data)
+            });
+    };
+
+    // конец whatIsHere
+
+    /*
+     * Приватный метод setViewMap
+     *
+     * Метод имитирует одинарный клик по карте.
+     *
+     * Аргументы:
+     *   mapCoord - массив объектов с координатами карты
+     *   zoom - зум
+     *
+     *
+     *
+     * Возвращает:
+
+     */
+
+    var setViewMap = function (mapCoord, zoom) {
+        var centerCoord = haptic.map.getCenterMap(mapCoord);
+        haptic.map.setViewMap(centerCoord, zoom);
+    };
+
+    // конец setViewMap
+
+
+    /*
+     *  Открытый модуль initModule
+     *
+     *  Назначение:
+     *  Требует, чтобы модуль shell предоставил свою функциональность
+     *
+     *  Аргументы:
+     *   $container - jq-объект, в котором будет работать модуль
+     *
+     *  Действие:
+     *   - инизиализацию модуля haptic.map
+     *   - вызов метода createMap модуля haptic.map
+     *   - вызов метода createMap модуля haptic.map.initMap()
+     *
+     *  Возвращает:
+     *   true в случае успеха, иначе false
+     *
+     *  Исключения: нет
+     *
+     * */
+
+    var initModule = function ($container) {
         setJqueryMap(setJqueryMap);
         haptic.map.initModule($container);
         haptic.fake.initModule($container);
@@ -64,12 +112,19 @@ haptic.shell = (function(){
      *   false - если не выполнена
      */
 
-    var initMap = function(mapCoord, zoom){
+    var initMap = function (mapCoord, zoom) {
+        if (!moduleState.initMap) {
+            haptic.map.initMap(mapCoord, zoom)
+                .then(function () {
+                    moduleState.initMap = true;
+                    moduleState.mapZoom = zoom;
+                    // Серилизуем объект, чтобы его потом можно было удобнее сравнивать
+                    moduleState.mapCoord = JSON.stringify(mapCoord);
+                })
+        } else {
+            console.error("The map was initialized!")
+        }
 
-        haptic.map.initMap(mapCoord, zoom)
-            .then(function(){
-                moduleState.initMap = true;
-            })
 
     };
 
@@ -91,26 +146,34 @@ haptic.shell = (function(){
      *   true - если функция выполнена
      *   false - если не выполнена
      */
-    var click = function(clickCoord, mapCoord, zoom){
 
+    var click = function (clickCoord, mapCoord, zoom) {
 
-        // todo create method getCenterMap
-        haptic.map.getCenterMap(mapCoord);
+        // Проверяем инициализацию карты
+        if (!moduleState.initMap) {
+            console.error("The map wasn't initialized!");
+            return false;
+        }
 
+        // Проверяем сменились ли координаты
+        var strMapCoord = JSON.stringify(mapCoord);
 
+        if (moduleState.mapCoord != strMapCoord || zoom != !moduleState.zoom) {
+            setViewMap(mapCoord, zoom);
+        }
 
-        haptic.map.whatIsHere(clickCoord.lat, clickCoord.lng)
-            .then(function(data){
-                // console.log(data)
-            });
+        // todo сделать метод, который будет имитировать клик на карте отображая кружок
 
     };
 
-    var dblclick = function(){
+    // Конец click
+
+
+    var dblclick = function () {
 
     };
 
-    return{
+    return {
         initModule: initModule,
         initMap: initMap,
         click: click,
