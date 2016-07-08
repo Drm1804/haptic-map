@@ -19,8 +19,8 @@ haptic.fake = (function () {
         map_html: '<div id="haptic-fake" class="haptic-fake" style="">' +
         '<input class="haptic-fake-input-init" type="submit"  value="Инициализировать"  style="display: block;"/>' +
         '<hr>'+
-        '<span>lat:</span><input class="haptic-fake-input-lat" placeholder="lat" value="61.42147064208985" type="text" style="width: 100px; display: block;">' +
-        '<span>lng:</span><input class="haptic-fake-input-lng" placeholder="lng" value="55.14788084304194" type="text" style="width: 100px; display: block;">' +
+        '<span>lat:</span><input class="haptic-fake-input-lat" placeholder="lat" value="55.14788084304194" type="text" style="width: 100px; display: block;">' +
+        '<span>lng:</span><input class="haptic-fake-input-lng" placeholder="lng" value="61.42147064208985" type="text" style="width: 100px; display: block;">' +
         '<input class="haptic-fake-input-click" type="submit"  value="Кликнуть"  style="display: block;"/>' +
         '' +
         '</div>'

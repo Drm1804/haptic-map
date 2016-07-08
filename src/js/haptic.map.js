@@ -86,16 +86,26 @@ haptic.map = (function () {
      *  Исключения: нет
      *
      * */
-    var whatIsHere = function (_lat, _lng) {
-        var lat = +_lat;
-        var lng = +_lng;
-        console.log('lat: ' + lat + ',' + 'lng: ' + lng);
+    var whatIsHere = function (lat, lng) {
+        console.log('lat: ' + lng + ',' + 'lng: ' + lat);
+
+        /*
+        *  Ебаные колходники, сука!
+        *  Везде, сука везде используется порядок Широта/Долгота
+        *  Но, сука, только в этом методе, один единственный метод принимает первым параметром Долготу, а вторым Широту
+        *
+        *  Очень, бля, удобно!
+        *
+        * */
         return DG.ajax({
             url: 'http://catalog.api.2gis.ru/geo/search',
             data: {
-                key: 'ruczoy1743',
+                key: 'runmzw5222',
                 version: 1.3,
-                q: lat + ',' + lng
+                q: lng + ',' + lat
+            },
+            success: function(data){
+                console.log(data)
             },
             error: function (error) {
                 console.log(error);
@@ -113,8 +123,8 @@ haptic.map = (function () {
      *  создает на карте круг, обозначающий одиночный клик
      *
      *  Аргументы:
-     *   _lat - number/string - широта (координаты центра кртуга)
-     *   _lng - number/string - долгота (координаты центра кртуга)
+     *   _lat - number/string - широта (координаты центра круга)
+     *   _lng - number/string - долгота (координаты центра круга)
      *
      *
      *  Действие:
@@ -177,7 +187,7 @@ haptic.map = (function () {
 
     var subscribeEvent = function () {
         moduleMap.mapObject.on('preclick', function (ev) {
-            whatIsHere(ev.latlng.lng, ev.latlng.lat);
+            whatIsHere(ev.latlng.lat, ev.latlng.lng);
             // console.log('Координаты клика ' + ev.latlng.lat + '/' + ev.latlng.lng + '');
         })
     };
