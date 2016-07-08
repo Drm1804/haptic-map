@@ -66,7 +66,6 @@ haptic.shell = (function () {
     var whatIsHere = function (clickCoord) {
         haptic.map.whatIsHere(clickCoord[0], clickCoord[1])
             .then(function (data) {
-                 console.log('Here is: ');
                  console.log(data.result[0]);
             });
     };
@@ -94,32 +93,6 @@ haptic.shell = (function () {
     };
 
     // конец setViewMap
-
-    /*
-     * Приватный метод calcOffsetClickCircle
-     *
-     * Метод высчитывает отступ сверху и справа от края карты в процентах
-     *
-     * Аргументы:
-     *   mapCoord - массив объектов с координатами карты
-     *   zoom - зум
-     *
-     *
-     *
-     * Возвращает:
-
-     */
-
-    var calcOffsetClickCircle = function(clickCoord, mapCoord){
-
-        // todo подумать над реализацией
-
-        // debugger;
-
-    };
-
-
-    // конец calcOffsetClickCircle
 
     //------------------------------
     // Открытые методы
@@ -236,10 +209,7 @@ haptic.shell = (function () {
             setViewMap(mapCoord, zoom);
         }
 
-        // todo модифицировать метод так, чтобы в него можно было передавать проценты для отступа
-        var offset = calcOffsetClickCircle(clickCoord, mapCoord);
-
-        haptic.map.createClickCircle(offset);
+        haptic.map.createClickCircle(clickCoord[0], clickCoord[1]);
 
         whatIsHere(clickCoord);
 

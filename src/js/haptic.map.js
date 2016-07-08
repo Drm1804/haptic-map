@@ -87,7 +87,7 @@ haptic.map = (function () {
      *
      * */
     var whatIsHere = function (lat, lng) {
-        console.log('lat: ' + lng + ',' + 'lng: ' + lat);
+        console.log('lat: ' + lat + ',' + 'lng: ' + lng);
 
         /*
         *  Ебаные колходники, сука!
@@ -103,17 +103,6 @@ haptic.map = (function () {
                 key: 'runmzw5222',
                 version: 1.3,
                 q: lng + ',' + lat
-            },
-            success: function(data){
-                console.log(data.result[0]);
-                var circle = DG.circleMarker([lat, lng],{color: "red", className: 'haptic-map-circle'}).addTo(moduleMap.mapObject);
-                circle.setRadius(10);
-                circle.setStyle({className: 'haptic-map-circle'});
-                setTimeout(function(){
-
-                    circle.remove();
-                }, 2000);
-
             },
             error: function (error) {
                 console.log(error);
@@ -136,25 +125,21 @@ haptic.map = (function () {
      *
      *
      *  Действие:
-     *   - создает html-элемент в виде круга на месте клика
+     *   - создает svg-элемент в виде круга на месте клика
      *   - удаляет этот элемент по истичению времени
      *
-     *  Возвращает:
-     *   true в случае успеха, иначе false
      *
      *  Исключения: нет
      *
      * */
 
-    var createClickCircle = function(offset){
-        //offset = [10, 10];
-        var circle = $(configMap.circle_html);
-        jqueryMap.mapDOMBlock.append(circle);
-        circle.css({top: offset[0] + '%', left: offset[1] + '%'});
-
-        //setTimeout(function(){
-        //    $(circle).remove();
-        //}, 3000)
+    var createClickCircle = function(lat, lng){
+        var circle = DG.circleMarker([lat, lng],{color: "red", className: 'haptic-map-circle'}).addTo(moduleMap.mapObject);
+        circle.setRadius(10);
+        circle.setStyle({className: 'haptic-map-circle'});
+        setTimeout(function(){
+            circle.remove();
+        }, 2000);
     };
 
     // Конец createClickCircle
@@ -195,8 +180,12 @@ haptic.map = (function () {
 
     var subscribeEvent = function () {
         moduleMap.mapObject.on('preclick', function (ev) {
-            whatIsHere(ev.latlng.lat, ev.latlng.lng);
-            // console.log('Координаты клика ' + ev.latlng.lat + '/' + ev.latlng.lng + '');
+            whatIsHere(ev.latlng.lat, ev.latlng.lng)
+                .then(function (data) {
+                    console.log(data.result[0]);
+                });
+
+            createClickCircle(ev.latlng.lat, ev.latlng.lng);
         })
     };
 
@@ -224,7 +213,6 @@ haptic.map = (function () {
 
         return DG.then(function () {
                 moduleMap.mapObject = DG.map('haptic-map', {
-                    // todo сделать центровку карты из внешних данных
                     center: [mapCenter[0], mapCenter[1]],
                     zoom: zoom,
                     zoomControl: false,
