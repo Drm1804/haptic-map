@@ -56,7 +56,6 @@ var haptic = (function(){
     *
     */
     var click = function(clickCoord, mapCoord, zoom){
-        console.log(clickCoord)
 
         // todo тестовые данные, используются только для отладки
         mapCoord = [{lat: 61.39949798583985,lng: 55.15223368925793},

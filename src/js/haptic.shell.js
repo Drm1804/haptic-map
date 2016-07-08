@@ -113,10 +113,8 @@ haptic.shell = (function () {
     var calcOffsetClickCircle = function(clickCoord, mapCoord){
 
         // todo подумать над реализацией
-        //var widthMap = mapCoord[0].lng - mapCoord[1].lng;
-        //widthMap = (widthMap < 0) ? widthMap*(-1): widthMap;
-        //var offsetLeft =  mapCoord[0].lng - clickCoord[1]
-        //debugger;
+
+        // debugger;
 
     };
 
@@ -241,7 +239,7 @@ haptic.shell = (function () {
         // todo модифицировать метод так, чтобы в него можно было передавать проценты для отступа
         var offset = calcOffsetClickCircle(clickCoord, mapCoord);
 
-        //haptic.map.createClickCircle(offset);
+        haptic.map.createClickCircle(offset);
 
         whatIsHere(clickCoord);
 

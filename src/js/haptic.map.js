@@ -105,7 +105,15 @@ haptic.map = (function () {
                 q: lng + ',' + lat
             },
             success: function(data){
-                console.log(data)
+                console.log(data.result[0]);
+                var circle = DG.circleMarker([lat, lng],{color: "red", className: 'haptic-map-circle'}).addTo(moduleMap.mapObject);
+                circle.setRadius(10);
+                circle.setStyle({className: 'haptic-map-circle'});
+                setTimeout(function(){
+
+                    circle.remove();
+                }, 2000);
+
             },
             error: function (error) {
                 console.log(error);
