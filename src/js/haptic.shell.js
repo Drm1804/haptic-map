@@ -210,7 +210,9 @@ haptic.shell = (function () {
         // Проверяем сменились ли координаты
         var strMapCoord = JSON.stringify(mapCoord);
 
-        if (moduleState.mapCoord != strMapCoord || zoom != !moduleState.zoom) {
+        if (moduleState.mapCoord != strMapCoord || moduleState.zoom != zoom) {
+            moduleState.mapCoord = strMapCoord;
+            moduleState.zoom = zoom;
             setViewMap(mapCoord, zoom);
         }
 
