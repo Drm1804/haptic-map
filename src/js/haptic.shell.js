@@ -173,7 +173,7 @@ haptic.shell = (function () {
      * Метод имитирует одинарный клик по карте.
      *
      * Аргументы:
-     *   clickCoord - массив, координаты клика
+     *   *clickCoord - массив, координаты клика (обязательно)
      *   mapCoord - массив, координаты углов карты
      *   zoom - зум
      *
@@ -193,10 +193,13 @@ haptic.shell = (function () {
 
     var click = function (clickCoord, mapCoord, zoom) {
 
-
-        if (!clickCoord || !Array.isArray(clickCoord) || !Array.isArray(mapCoord) || !mapCoord || !zoom) {
+        // Проверяеим обязательный параметр clickCoord
+        if (!clickCoord || !Array.isArray(clickCoord)) {
             return false;
         }
+
+        mapCoord = mapCoord || JSON.parse(moduleState.mapCoord);
+        zoom = zoom || moduleState.mapZoom;
 
         // Проверяем инициализацию карты
         if (!moduleState.initMap) {

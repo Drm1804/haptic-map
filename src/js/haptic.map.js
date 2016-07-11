@@ -180,12 +180,9 @@ haptic.map = (function () {
 
     var subscribeEvent = function () {
         moduleMap.mapObject.on('preclick', function (ev) {
-            whatIsHere(ev.latlng.lat, ev.latlng.lng)
-                .then(function (data) {
-                    console.log(data.result[0]);
-                });
+            var clickCoord = [ String() + ev.latlng.lat,  String() + ev.latlng.lng ];
+            haptic.shell.click(clickCoord);
 
-            createClickCircle(ev.latlng.lat, ev.latlng.lng);
         })
     };
 
