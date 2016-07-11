@@ -1,8 +1,7 @@
-.haptic-fake{
-    position:absolute;
-    right: 5px;
-    top: 25px;
+.haptic-show{
+    width: 300px;
     padding: 10px 5px;
     border-radius: 5px;
     border: 1px solid #707070;
+    float: left;
 }

@@ -66,7 +66,8 @@ haptic.shell = (function () {
     var whatIsHere = function (clickCoord) {
         haptic.map.whatIsHere(clickCoord[0], clickCoord[1])
             .then(function (data) {
-                 console.log(data.result[0]);
+                console.log(data.result[0]);
+                haptic.show.showData(data.result[0])
             });
     };
 
@@ -124,6 +125,7 @@ haptic.shell = (function () {
         setJqueryMap(setJqueryMap);
         haptic.map.initModule($container);
         haptic.fake.initModule($container);
+        haptic.show.initModule($container);
     };
     // Конец initModule
 
