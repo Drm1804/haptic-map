@@ -23,11 +23,13 @@ haptic.show = (function () {
 
     var jqueryMap = {};
 
-    var showData = function(data){
-        jqueryMap.nameElement.text(data.name);
-        jqueryMap.typeElement.text(data.attributes.purpose);
-    };
 
+    //------------------------------
+    // Приватные методы
+    //------------------------------
+
+
+    // Метод кэширует jQuery элементы
     var setJqueryMap = function () {
         var $append_target = moduleMap.$append_target;
         var $controlBox = $append_target.find('#haptic-show');
@@ -40,11 +42,60 @@ haptic.show = (function () {
         };
     };
 
+    //------------------------------
+    // Открытые методы
+    //------------------------------
+
+    /*
+     *  Открытый метод showData
+     *
+     *  Назначение:
+     *  отбражает данные на экране
+     *
+     *  Аргументы:
+     *   data - Object с данными для вывода
+     *
+     *  Действие:
+     *   - в заготовленный блок вставляет значения
+     *
+     *
+     *  Исключения: нет
+     *
+     * */
+
+
+    var showData = function(data){
+        jqueryMap.nameElement.text(data.name);
+        jqueryMap.typeElement.text(data.attributes.purpose);
+    };
+
+    // Конец showData
+
+    /*
+     *  Открытый метод initModule
+     *
+     *  Назначение:
+     *    инициализирует модуль haptic.show
+     *
+     *  Аргументы:
+     *   $append_target - jq-объект, в который модуль добавил свой HTML-шаблон
+     *
+     *  Действие:
+     *   - добавляет свой шаблон в общую структуру HTML
+     *   - вызывает собственный метод setJqueryMap, который заполняет jqueryMap
+     *
+     *
+     *  Исключения: нет
+     *
+     * */
+
     var initModule = function ($append_target) {
         moduleMap.$append_target = $append_target;
         $append_target.append(configMap.map_html);
         setJqueryMap();
     };
+
+    // Конец initModule
 
     return {
         initModule: initModule,
