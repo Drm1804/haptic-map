@@ -17,8 +17,6 @@
   "homepage": "https://github.com/Drm1804/haptic-map#readme",
   "devDependencies": {
     "browser-sync": "^2.13.0",
-    "gulp": "^3.9.1",
-    "gulp-util": "^3.0.7",
-    "wrench": "^1.5.9"
+    "gulp": "^3.9.1"
   }
 }

@@ -1,28 +1,20 @@
-/**
- *  Welcome to your gulpfile!
- *  The gulp tasks are splitted in several files in the gulp directory
- *  because putting all here was really too long
- */
-
 'use strict';
 
+// var path = require('path');
 var gulp = require('gulp');
-var wrench = require('wrench');
+// var conf = require('./conf');
+var browserSync = require('browser-sync').create();
 
 
-/**
- *  This will load all js or coffee files in the gulp directory
- *  in order to load all gulp tasks
- */
-wrench.readdirSyncRecursive('./gulp').filter(function(file) {
-    return (/\.(js|coffee)$/i).test(file);
-}).map(function(file) {
-    require('./gulp/' + file);
-});
-/**
- *  Default task clean temporaries directories and launch the
- *  main optimization build task
- */
-gulp.task('default', ['clean'], function () {
-    gulp.start('build');
+gulp.task('serve', function(){
+
+    browserSync.init({
+        server: {
+            baseDir :'./src'
+        }
+    });
+
+    gulp.watch("src/js/*.js").on('change', browserSync.reload);
+    gulp.watch("src/css/*.css").on('change', browserSync.reload);
+    gulp.watch("src/*.html").on('change', browserSync.reload);
 });
